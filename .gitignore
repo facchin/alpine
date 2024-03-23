@@ -1,0 +1,39 @@
+# Gerais                   #
+############################
+tmp_*
+
+# OS generated files       #
+############################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Tool specific files      #
+############################
+# vim
+*~
+*.swp
+*.swo
+# Sublime Text & TextMate
+*.sublime-*
+*.stTheme.cache
+*.tmlanguage.cache
+*.tmPreferences.cache
+# Eclipse
+.settings/*
+# JetBrains, aka PHPStorm, IntelliJ IDEA
+.idea/*
+# NetBeans
+nbproject/*
+# Visual Studio 2015 cache/options directory
+# Visual Studio Code
+# .vs
+# .vscode
+# .nova
+# Sass preprocessor
+.sass-cache/

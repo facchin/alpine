@@ -1,0 +1,33 @@
+// cSpell Settings
+{
+  // Version of the setting file.  Always 0.2
+  "version": "0.2",
+  // Enable / Disable the spell checker.
+  "enabled": true,
+  // Current active spelling language
+  "language": "en,pt,pt_BR",
+  // General dictionaries
+  "dictionaries": [
+    "en-gb"
+  ],
+  // Controls the maximum number of spelling errors per document.
+  "maxNumberOfProblems": 10,
+  // Controls the number of suggestions shown.
+  "numSuggestions": 4,
+  // Enable / Disable compound words like 'errormessage'
+  "allowCompoundWords": true,
+  // List of words to be always considered incorrect
+  // This is useful for offensive words and common spelling errors.
+  // For example "hte" should be "the"
+  "flagWords": [
+    "hte"
+  ],
+  // Specify paths/files to ignore.
+  "ignorePaths": [
+    ".git" // Ignore the .git directory
+  ],
+  // Words to be ignored and not suggested.
+  "ignoreWords": [],
+  // List of words to be always considered correct
+  "words": []
+}

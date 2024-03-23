@@ -1,0 +1,17 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.vscode": true,
+    "**/.editorconfig": true,
+    "**/.gitattributes": true,
+    "**/.gitignore": true,
+  },
+  "git.inputValidationSubjectLength": 77,
+  "git.autofetch": true,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true
+  },
+  "editor.minimap.enabled": false,
+  "git.ignoreLimitWarning": true
+}
