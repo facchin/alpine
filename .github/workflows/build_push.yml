@@ -20,17 +20,11 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-           # Carregando envs
           source .env
-          # Loop através dos diretórios no diretório atual
           for dir in */; do
-            # Extrai o nome do diretório removendo a barra final
             version=${dir%/}
-
-            # Verifica se o nome do diretório corresponde ao padrão de versão
             if [[ $version =~ ^[0-9]+\.[0-9]+$ ]]; then
               if [ -f "$version/Dockerfile" ]; then
-                # BUILD final
                 docker build \
                     -f $version/Dockerfile \
                     --build-arg TIMEZONE=$TIMEZONE \
@@ -38,5 +32,6 @@ jobs:
               fi
             fi
           done
+        shell: bash
 
 
