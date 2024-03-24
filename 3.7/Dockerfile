@@ -16,6 +16,9 @@ RUN apk update && apk upgrade --force \
     # Cria um usuário não privilegiado chamado "app"
     && adduser -D -u 1001 app
 
+# Direciona o diretorio padrão de cache para o diretorio de cache real
+RUN ln -s /var/cache/apk /etc/apk/cache
+
 ENTRYPOINT ["watch", "-n", "1", "date"]
 
 # Altera o usuário para "app"
