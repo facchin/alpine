@@ -7,9 +7,11 @@ ENV TIMEZONE=$TIMEZONE
 # Atualiza pacotes existentes e instala os pacotes necessários
 RUN apk update && apk upgrade --force \
     && apk add \
+        bash \
+        bash-completion \
         tzdata \
-        ca-certificates \
         openssl \
+        ca-certificates \
     && update-ca-certificates 2>/dev/null || true \
     # Configura o timezone
     && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
@@ -30,6 +32,9 @@ ENTRYPOINT ["watch", "-n", "1", "date"]
 
 # Altera o usuário para "app"
 USER app
+
+# Define o diretório de trabalho para o usuário "app"
+WORKDIR /home/app
 
 # Comando de build info
 RUN printf "date: %s\tBUILD of facchin\alpine:3.7\n" \

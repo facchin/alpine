@@ -1,6 +1,7 @@
 #!/bin/bash
 # chmod +x run.sh
 # ./run.sh 3.7
+# ./play.sh && ./run.sh 3.7
 
 # Carregando envs
 source .env
