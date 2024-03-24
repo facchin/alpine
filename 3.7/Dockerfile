@@ -31,5 +31,6 @@ ENTRYPOINT ["watch", "-n", "1", "date"]
 # Altera o usuário para "app"
 USER app
 
-# Define o diretório de trabalho para o usuário "app"
-WORKDIR /home/app
+# Comando de build info
+RUN printf "date: %s\tBUILD of facchin\alpine:3.7\n" \
+    `date -u +"%Y-%m-%dT%H:%M:%SZ"` > /home/app/build_info
