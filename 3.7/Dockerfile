@@ -8,6 +8,7 @@ ENV TIMEZONE=$TIMEZONE
 RUN apk update && apk upgrade --force \
     && apk add \
         tzdata \
+        ca-certificates \
         openssl \
     && update-ca-certificates 2>/dev/null || true \
     # Configura o timezone
