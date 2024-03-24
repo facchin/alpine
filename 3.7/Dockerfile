@@ -9,6 +9,7 @@ RUN apk update && apk upgrade --force \
     && apk add \
         bash \
         bash-completion \
+        coreutils \
         tzdata \
         openssl \
         ca-certificates \
