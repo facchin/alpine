@@ -1,0 +1,18 @@
+# Utiliza imagem específica passada como argumento (SMASH_IMG) como base
+ARG SMASH_IMG=unknown
+FROM $SMASH_IMG
+
+LABEL description="Base image to use for dev with Alpine" \
+      maintainer="eu" \
+      vendor="eu" \
+      name="facchin/alpine"
+
+# Altera o usuário para "app"
+USER app
+
+# Define o diretório de trabalho para o usuário "app"
+WORKDIR /home/app
+
+# Comando de build info
+RUN printf "date: %s\tBUILD of facchin\alpine:3.7\n" \
+    `date -u +"%Y-%m-%dT%H:%M:%SZ"` > /home/app/build_info

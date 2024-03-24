@@ -2,6 +2,14 @@
 # chmod +x play.sh
 # ./play.sh
 
+# Definindo o parâmetro para habilitar o "smash"
+enable_smash=false
+
+# Verifica se o parâmetro "-s" ou "--smash" foi fornecido
+if [[ "$1" == "-s" || "$1" == "--smash" ]]; then
+  enable_smash=true
+fi
+
 rmI () {
     imageName=$1
     if [[ "$(docker images -q $imageName 2> /dev/null)" != "" ]]; then
@@ -42,12 +50,48 @@ for dir in */; do
             docker build \
                 -f $version/Dockerfile \
                 --build-arg TIMEZONE=$TIMEZONE \
-                -t ${REGISTRY}/${REPOSITORY}:${version} .
+                -t BUILD/${REPOSITORY}:${version} .
         fi
     fi
 done
 
+# SMASH GERAL DAS IMAGES
+# Verifica se a ação "smash" está habilitada
+if [ "$enable_smash" = true ]; then
+    # Loop através dos diretórios no diretório atual
+    for dir in */; do
+        # Extrai o nome do diretório removendo a barra final
+        version=${dir%/}
+
+        # Verifica se o nome do diretório corresponde ao padrão de versão
+        if [[ $version =~ ^[0-9]+\.[0-9]+$ ]]; then
+            if [ -f "$version/Dockerfile" ]; then
+                # Esmagando images (remover conteúdo adicional não usado)
+                docker run -d --name smash_img BUILD/${REPOSITORY}:${version}
+                docker export smash_img > /tmp/docker-smash_img.tar
+                docker import /tmp/docker-smash_img.tar smash_latest
+                rm /tmp/docker-smash_img.tar
+
+                docker build \
+                    -f Dockerfile.smash \
+                    --build-arg SMASH_IMG=smash_latest \
+                    -t ${REGISTRY}/${REPOSITORY}:${version} .
+
+                rmI smash_latest
+
+            fi
+        fi
+    done
+fi
+
+
+
 
 echo -e "\n\n"
 docker images --format '{{.Size}}\t{{.Repository}}:{{.Tag}}' | awk -F'\t' '$2 ~ /^alpine/'
+docker images --format '{{.Size}}\t{{.Repository}}:{{.Tag}}' | awk -F'\t' '$2 ~ /^BUILD/'
 docker images --format '{{.Size}}\t{{.Repository}}:{{.Tag}}' | awk -v registry="$REGISTRY" -v repository="$REPOSITORY" -F'\t' '$2 ~ ("^" registry "/" repository)'
+
+# Limpeza
+rmI BUILD/${REPOSITORY}
+
