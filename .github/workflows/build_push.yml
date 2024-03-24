@@ -26,13 +26,12 @@ jobs:
             if [[ $version =~ ^[0-9]+\.[0-9]+$ ]]; then
               if [ -f "$version/Dockerfile" ]; then
                 docker build \
-                    -f $version/Dockerfile \
-                    --build-arg TIMEZONE=$TIMEZONE \
-                    -t BUILD/${REPOSITORY}:${version} .
+                  -f $version/Dockerfile \
+                  --build-arg TIMEZONE=$TIMEZONE \
+                  -t build/${REPOSITORY}:${version} .
               fi
             fi
           done
-
         shell: bash
 
 
