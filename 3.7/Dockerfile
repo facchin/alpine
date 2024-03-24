@@ -19,6 +19,7 @@ RUN apk update && apk upgrade --force \
 # Direciona o diretorio padrão de cache para o diretorio de cache real
 RUN ln -s /var/cache/apk /etc/apk/cache
 
+# Define o entrypoint do container
 ENTRYPOINT ["watch", "-n", "1", "date"]
 
 # Altera o usuário para "app"
