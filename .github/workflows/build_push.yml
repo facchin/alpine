@@ -60,8 +60,6 @@ jobs:
                     -t ${REGISTRY}/${REPOSITORY}:${version} .
                 docker push ${REGISTRY}/${REPOSITORY}:${version}
                 rmI smash_latest
-                rmI build/${REPOSITORY}:${version}
-                rm /tmp/docker-smash_img.tar
               fi
             fi
           done
