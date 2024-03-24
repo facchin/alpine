@@ -19,6 +19,11 @@ RUN apk update && apk upgrade --force \
 # Direciona o diretorio padrão de cache para o diretorio de cache real
 RUN ln -s /var/cache/apk /etc/apk/cache
 
+# Remove arquivos temporários e limpa logs
+RUN apk cache clean \
+    && rm -rf /tmp/* \
+    && find /var/log -type f | while read f; do echo -n '' > ${f}; done
+
 # Define o entrypoint do container
 ENTRYPOINT ["watch", "-n", "1", "date"]
 
