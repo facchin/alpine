@@ -29,6 +29,7 @@ jobs:
                     -f $version/Dockerfile \
                     --build-arg TIMEZONE=$TIMEZONE \
                     -t ${REGISTRY}/${REPOSITORY}:${version} .
+                docker push ${REGISTRY}/${REPOSITORY}:${version}
               fi
             fi
           done
