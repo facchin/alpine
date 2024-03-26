@@ -63,15 +63,16 @@ callback_build() {
 # Define a função que será chamada de volta
 callback_smash() {
     # Esmagando images (remover conteúdo adicional não usado)
+    echo "FOI1"
     docker run -d --name smash_img ${build_registry}/${REPOSITORY}:$1
     docker export smash_img > /tmp/docker-smash_img.tar
     docker import /tmp/docker-smash_img.tar ${build_registry}/smash:latest
-
+    echo "FOI2"
     docker build \
         -f Dockerfile.smash \
         --build-arg SMASH_IMG=${build_registry}/smash:latest \
         -t ${REGISTRY}/${REPOSITORY}:$1 .
-
+    echo "FOI3"
     # Limpeza
     rmC ${build_registry}/${REPOSITORY}
     rmI ${build_registry}/smash
