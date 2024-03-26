@@ -20,44 +20,15 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          rmI () {
-            imageName=$1
-            if [[ "$(docker images -q $imageName 2> /dev/null)" != "" ]]; then
-              containerIds=$(docker ps -a | grep "$imageName" | awk '{ print $1 }')
-              if [[ ! -z "$containerIds" ]]; then
-                docker stop $containerIds
-                docker rm $containerIds
-              fi
-              danglingIds=$(docker images --filter "dangling=true" -q --no-trunc)
-              if [[ ! -z "$danglingIds" ]]; then
-                docker rmi $danglingIds
-              fi
-              docker images -q $imageName | xargs docker rmi -f
-            fi
-          }
           source .env
+          source utils.sh
+          build_registry=localhost
+          navigation callback_build
+          navigation callback_smash
           for dir in */; do
             version=${dir%/}
             if [[ $version =~ ^[0-9]+\.[0-9]+$ ]]; then
               if [ -f "$version/Dockerfile" ]; then
-                docker build \
-                  -f $version/Dockerfile \
-                  --build-arg TIMEZONE=$TIMEZONE \
-                  -t build/${REPOSITORY}:${version} .
-              fi
-            fi
-          done
-          for dir in */; do
-            version=${dir%/}
-            if [[ $version =~ ^[0-9]+\.[0-9]+$ ]]; then
-              if [ -f "$version/Dockerfile" ]; then
-                docker run -d --name smash_img build/${REPOSITORY}:${version}
-                docker export smash_img > /tmp/docker-smash_img.tar
-                docker import /tmp/docker-smash_img.tar smash_latest
-                docker build \
-                    -f Dockerfile.smash \
-                    --build-arg SMASH_IMG=smash_latest \
-                    -t ${REGISTRY}/${REPOSITORY}:${version} .
                 docker push ${REGISTRY}/${REPOSITORY}:${version}
               fi
             fi
