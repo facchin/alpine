@@ -75,6 +75,9 @@ callback_smash() {
     echo "FOI3"
     # Limpeza
     rmC ${build_registry}/${REPOSITORY}
+    echo "FOI4"
     rmI ${build_registry}/smash
+    echo "FOI5"
     rm /tmp/docker-smash_img.tar
+    echo "FOI6"
 }
