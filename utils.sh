@@ -7,35 +7,41 @@ rmI () {
         echo "FOI6"
         # remove containers
         rmC $imageName
-        echo "FOI11"
+        echo "FOI7"
         # remove dangling images
         danglingIds=$(docker images --filter "dangling=true" -q --no-trunc)
         if [[ ! -z "$danglingIds" ]]; then
             docker rmi $danglingIds &> /dev/null
         fi
-        echo "FOI12"
+        echo "FOI8"
         # remove images
         docker images -q $imageName | xargs docker rmi -f &> /dev/null
     fi
 }
 
-rmC () {
+# rmC () {
+#     local imageName=$1
+#     echo "FOI7"
+#     # Remove containers
+#     containerIds=$(docker ps -a | grep "$imageName" | awk '{ print $1 }')
+#     echo "FOI8"
+#     if [[ ! -z "$containerIds" ]]; then
+#         docker stop $containerIds &> /dev/null
+#         docker rm $containerIds &> /dev/null
+#     fi
+# }
+
+rmC() {
     local imageName=$1
-    echo "FOI7>>>$imageName"
-    docker ps -a
-    echo "FOI7-1"
-    docker ps -a | grep "$imageName"
-    echo "FOI7-2"
-    docker ps -a | grep "$imageName" | awk '{ print $1 }'
-    echo "FOI7-3"
-    # Remove containers
-    containerIds=$(docker ps -a | grep "$imageName" | awk '{ print $1 }')
-    echo "FOI8"
+    local containerIds=$(docker ps -a -q --filter ancestor="$imageName")
+
     if [[ ! -z "$containerIds" ]]; then
-        echo "FOI9"
-        docker stop $containerIds &> /dev/null
-        echo "FOI10"
-        docker rm $containerIds &> /dev/null
+        echo "Parando e removendo contêineres..."
+        for id in $containerIds; do
+            docker stop $id &> /dev/null
+            docker rm $id &> /dev/null
+            echo "Contêiner $id parado e removido."
+        done
     fi
 }
 
@@ -86,7 +92,7 @@ callback_smash() {
     rmC ${build_registry}/${REPOSITORY}
     echo "FOI4"
     rmI ${build_registry}/smash
-    echo "FOI13"
+    echo "FOI9"
     rm /tmp/docker-smash_img.tar
-    echo "FOI14"
+    echo "FOI10"
 }
