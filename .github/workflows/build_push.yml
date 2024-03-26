@@ -24,6 +24,8 @@ jobs:
           source utils.sh
           build_registry=localhost
           navigation callback_build
+          echo "10 20 30 40 50" | awk '{print $2}'
+          echo "apple orange banana" | xargs -n 1 echo
         shell: bash
 
 
