@@ -2,18 +2,18 @@
 
 rmI () {
     local imageName=$1
-
+    echo "FOI5"
     if [[ "$(docker images -q $imageName 2> /dev/null)" != "" ]]; then
-
+        echo "FOI6"
         # remove containers
         rmC $imageName
-
+        echo "FOI7"
         # remove dangling images
         danglingIds=$(docker images --filter "dangling=true" -q --no-trunc)
         if [[ ! -z "$danglingIds" ]]; then
             docker rmi $danglingIds &> /dev/null
         fi
-
+        echo "FOI8"
         # remove images
         docker images -q $imageName | xargs docker rmi -f &> /dev/null
     fi
@@ -77,7 +77,7 @@ callback_smash() {
     rmC ${build_registry}/${REPOSITORY}
     echo "FOI4"
     rmI ${build_registry}/smash
-    echo "FOI5"
+    echo "FOI9"
     rm /tmp/docker-smash_img.tar
-    echo "FOI6"
+    echo "FOI10"
 }
