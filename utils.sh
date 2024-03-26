@@ -21,7 +21,13 @@ rmI () {
 
 rmC () {
     local imageName=$1
-    echo "FOI7"
+    echo "FOI7>>>$imageName"
+    docker ps -a
+    echo "FOI7-1"
+    docker ps -a | grep "$imageName"
+    echo "FOI7-2"
+    docker ps -a | grep "$imageName" | awk '{ print $1 }'
+    echo "FOI7-3"
     # Remove containers
     containerIds=$(docker ps -a | grep "$imageName" | awk '{ print $1 }')
     echo "FOI8"
