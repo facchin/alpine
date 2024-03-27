@@ -20,10 +20,8 @@ rmI () {
 
 rmC() {
     local imageName=$1
-    # local containerIds=$(docker ps -a -q --filter ancestor="$imageName")
-    echo "FOI00001"
     local containerIds=$(docker ps -a | grep "$imageName" | awk '{ print $1 }')
-    echo "FOI00002"
+
     if [[ ! -z "$containerIds" ]]; then
         echo "Parando e removendo contêineres..."
         for id in $containerIds; do
