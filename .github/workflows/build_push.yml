@@ -25,14 +25,7 @@ jobs:
           build_registry=localhost
           navigation callback_build
           navigation callback_smash
-          for dir in */; do
-            version=${dir%/}
-            if [[ $version =~ ^[0-9]+\.[0-9]+$ ]]; then
-                if [ -f "$version/Dockerfile" ]; then
-                docker push ${REGISTRY}/${REPOSITORY}:${version}
-                fi
-            fi
-          done
+          navigation callback_push
         shell: bash
 
 

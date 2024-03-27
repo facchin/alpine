@@ -49,7 +49,6 @@ navigation() {
     done
 }
 
-# Define a função que será chamada de volta
 callback_build() {
     # Baixando imagem alpine
     docker pull ${REPOSITORY}:$1 &> /dev/null
@@ -61,7 +60,6 @@ callback_build() {
         -t ${build_registry}/${REPOSITORY}:$1 .
 }
 
-# Define a função que será chamada de volta
 callback_smash() {
     # Esmagando images
     docker run -d --name smash_img ${build_registry}/${REPOSITORY}:$1
@@ -77,4 +75,9 @@ callback_smash() {
     rmC ${build_registry}/${REPOSITORY}
     rmI ${build_registry}/smash
     rm /tmp/docker-smash_img.tar
+}
+
+callback_push() {
+    # Realizando o push da imagem
+    docker push ${REGISTRY}/${REPOSITORY}:$1
 }
