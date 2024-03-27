@@ -69,6 +69,7 @@ callback_smash() {
     docker build \
         -f Dockerfile.smash \
         --build-arg SMASH_IMG=${build_registry}/smash:latest \
+        --build-arg VERSION=$1 \
         -t ${REGISTRY}/${REPOSITORY}:$1 .
 
     # Limpeza
