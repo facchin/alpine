@@ -29,5 +29,13 @@
   // Words to be ignored and not suggested.
   "ignoreWords": [],
   // List of words to be always considered correct
-  "words": []
+  "words": [],
+  "enableFiletypes": [
+    "dockerfile",
+    "jsonc",
+    "markdown",
+    "properties",
+    "shellscript",
+    "yaml"
+  ]
 }
