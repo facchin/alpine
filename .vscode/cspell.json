@@ -8,7 +8,14 @@
   "language": "en,pt,pt_BR",
   // General dictionaries
   "dictionaries": [
-    "en-gb"
+    "en-gb",
+    ".vscode/dictionaries/packages"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": ".vscode/dictionaries/packages",
+      "path": "./dictionaries/packages.txt"
+    }
   ],
   // Controls the maximum number of spelling errors per document.
   "maxNumberOfProblems": 10,
