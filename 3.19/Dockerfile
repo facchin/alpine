@@ -7,8 +7,6 @@ ENV TIMEZONE=$TIMEZONE
 # Atualiza pacotes existentes e instala os pacotes necessários
 RUN apk update && apk upgrade --force \
     && apk add \
-        bash \
-        bash-completion \
         coreutils \
         tzdata \
         openssl \
